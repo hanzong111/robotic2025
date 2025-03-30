@@ -19,7 +19,11 @@ INCLUDES	= -I includes/
 CFLAGS	= -Wall -Werror -Wextra $(INCLUDES) -fsanitize=leak -g3
 
 SRC_FILES	= main\
-				grid
+				grid\
+				print\
+				robot\
+				A*\
+				open_list_utils\
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -37,9 +41,6 @@ $(OBJS_DIR)%.o:	$(SRCS_DIR)%.c
 				@$(CC) $(CFLAGS) -Wall -Wextra -Werror -O3 -c $< -o $@
 				@echo "$(GREEN)Compiling $<$(DEF_COLOR)"
 
-
-# $(NAME)	: ${OBJS}
-# 		@$(CC) $(CFLAGS) $(LIBFTFLAGS) $(MLXFLAGS) $(OBJS) -o $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
