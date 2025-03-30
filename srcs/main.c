@@ -10,11 +10,11 @@ void    print_checks(Grid map, Robot robot)
     print_grid(&fresh);
     print_ore_positions(&map);
     printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_turn(&robot, RIGHT);
+    robot_facing(&robot, RIGHT);
     printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_turn(&robot, UP);
+    robot_facing(&robot, UP);
     printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_turn(&robot, DOWN);
+    robot_facing(&robot, DOWN);
     printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
 }
 
@@ -44,10 +44,10 @@ int main() {
             }
         printf("\nMovement instructions:\n");
         for (int i = 0; i < k; i++) {
-            if(robot.instructions[i] == GO_DOWN) printf("GO_DOWN ->");
-            else if(robot.instructions[i] == GO_UP) printf("GO_UP ->");
-            else if(robot.instructions[i] == GO_LEFT) printf("GO_LEFT ->");
-            else if(robot.instructions[i] == GO_RIGHT) printf("GO_RIGHT ->");
+            if(robot.instructions[i] == U_TURN) printf("U_TURN ->");
+            else if(robot.instructions[i] == TURN_LEFT) printf("TURN_LEFT ->");
+            else if(robot.instructions[i] == TURN_RIGHT) printf("TURN_RIGHT ->");
+            else if(robot.instructions[i] == MOVE_STRAIGHT) printf("MOVE_STRAIGHT ->");
         }
     }
     return 0;

@@ -45,7 +45,7 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 		@echo "$(GREEN)Compiling $<$(DEF_COLOR)"
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lm
 
 
 clean	:

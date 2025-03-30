@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <math.h>
 
 #define ROWS 5          // 5 rows (0-4)
 #define COLS 5          // 5 columns
@@ -17,6 +18,13 @@
 #define GO_RIGHT 11
 #define GO_UP 12
 #define GO_DOWN 13
+#define MOVE_STRAIGHT 14
+#define TURN_LEFT 15
+#define TURN_RIGHT 16
+#define U_TURN 17
+
+#define ANGLE_EPSILON 0.001f
+#define PI M_PI
 
 #define RED "\033[0;91mR "
 #define BLUE "\033[0;94mB "
@@ -49,6 +57,7 @@ typedef struct {
 typedef struct {
     Position pos;
     Position dir;
+    Position facing;
     Position old_pos;
     char     basket[4];
     int     instructions[25];
@@ -86,7 +95,7 @@ void    robot_init(Robot *robot);
 void    update_robot_position(Robot *robot, int x, int y);
 bool    update_robot_basket(Robot *robot, int index, char value);
 int     find_from_basket(const Robot *robot, char value);
-void    robot_turn(Robot *robot, Direction dir);
+void    robot_facing(Robot *robot, Direction dir);
 
 //A*.c
 int     heuristic(Position a, Position b);

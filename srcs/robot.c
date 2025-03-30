@@ -65,6 +65,6 @@ Position get_direction(Direction dir) {
     return DIRECTION_VECTORS[dir];
 }
 
-void    robot_turn(Robot *robot, Direction dir) {
+void    robot_facing(Robot *robot, Direction dir) {
     robot->dir = get_direction(dir);
 }
