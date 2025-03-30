@@ -37,7 +37,7 @@ int main() {
         int h = scanf("%d %d", &goal.x, &goal.y);
         (void)h;
         a_star(&p, robot.pos, goal, &map);
-        int k = convert_path_to_instructions(p.path, p.path_length, &robot);
+        int k = convert_path_to_actions(p.path, p.path_length, &robot);
         printf("Path (length %d):\n", p.path_length);
             for (int i = 0; i < p.path_length; i++) {
                 printf("(%d, %d) ", p.path[i].x, p.path[i].y);

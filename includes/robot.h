@@ -92,12 +92,14 @@ void    robot_turn(Robot *robot, Direction dir);
 int     heuristic(Position a, Position b);
 void    a_star_init(path *p);
 void    a_star(path *p, Position start, Position goal, Grid *grid);
-int     convert_path_to_instructions(const Position *path, int path_length, Robot *robot);
 
 //open_list_utils.c
 bool    open_list_is_empty(int open_size);
 int     open_list_find(Position pos, int open_size, Node *open_list);
 void    open_list_push(Node node, path *p);
 Node    open_list_pop(path *p);
+
+//convert_path_to_actions
+int     convert_path_to_actions(const Position *path, int path_length, Robot *robot);
 
 #endif
