@@ -44,7 +44,10 @@ int main() {
             }
         printf("\nMovement instructions:\n");
         for (int i = 0; i < k; i++) {
-            printf("%s ->", robot.instructions[i]);
+            if(robot.instructions[i] == GO_DOWN) printf("GO_DOWN ->");
+            else if(robot.instructions[i] == GO_UP) printf("GO_UP ->");
+            else if(robot.instructions[i] == GO_LEFT) printf("GO_LEFT ->");
+            else if(robot.instructions[i] == GO_RIGHT) printf("GO_RIGHT ->");
         }
     }
     return 0;

@@ -13,6 +13,11 @@
 #define EMPTY '\0'      // Empty cell
 #define BASKET_SIZE 4   // Robot basket size
 
+#define GO_LEFT 10
+#define GO_RIGHT 11
+#define GO_UP 12
+#define GO_DOWN 13
+
 #define RED "\033[0;91mR "
 #define BLUE "\033[0;94mB "
 #define GREEN "\033[0;92mD "
@@ -46,7 +51,7 @@ typedef struct {
     Position dir;
     Position old_pos;
     char     basket[4];
-    char     instructions[25][6];
+    int     instructions[25];
     Node     path_compare[4];
 } Robot;
 

@@ -17,7 +17,7 @@ void    robot_init(Robot *robot) {
     }
 
     for (int j = 0; j < 25; j++) {
-        robot->instructions[j][0] = '\0';
+        robot->instructions[j] = 0;
     }
 }
 

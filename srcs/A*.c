@@ -131,13 +131,13 @@ int convert_path_to_instructions(const Position *path, int path_length, Robot *r
         int dy = next.y - current.y;
 
         if (dx == 1) {
-            strcpy(r->instructions[instruction_count], "RIGHT");
+            r->instructions[instruction_count] = GO_RIGHT;
         } else if (dx == -1) {
-            strcpy(r->instructions[instruction_count], "LEFT");
+            r->instructions[instruction_count] = GO_LEFT;
         } else if (dy == 1) {
-            strcpy(r->instructions[instruction_count], "DOWN");
+            r->instructions[instruction_count] = GO_DOWN;
         } else if (dy == -1) {
-            strcpy(r->instructions[instruction_count], "UP");
+            r->instructions[instruction_count] = GO_UP;
         } else {
             // Invalid movement (diagonal or no movement)
             return -1;
