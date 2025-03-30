@@ -1,6 +1,6 @@
 #include "../includes/robot.h"
 
-void    print_checks(Grid map)
+void    print_checks(Grid map, Robot robot)
 {
     printf("\nFinal Grid:");
     print_grid(&map);
@@ -9,6 +9,13 @@ void    print_checks(Grid map)
     printf("\nCopied Grid:");
     print_grid(&fresh);
     print_ore_positions(&map);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
+    robot_turn(&robot, RIGHT);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
+    robot_turn(&robot, UP);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
+    robot_turn(&robot, DOWN);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
 }
 
 int main() {
@@ -23,14 +30,7 @@ int main() {
     //Ask for position of ores and store them in the ore_positions struct
     get_positions(&map, 'R');  // Red ores
     get_positions(&map, 'B');  // Blue ores
-    print_checks(map);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_turn(&robot, RIGHT);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_turn(&robot, UP);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_turn(&robot, DOWN);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
+    print_checks(map, robot);
     while (1)
     {
         printf("\nEnter new target cell (x y): ");
