@@ -1,11 +1,16 @@
 #include "../includes/robot.h"
 
+Position get_direction(Direction dir);
+void    robot_turn(Robot *robot, Direction dir);
+
 void    robot_init(Robot *robot) {
     robot->pos.x = 0;
     robot->pos.y = 0;
 
     robot->old_pos.x = -1;
     robot->old_pos.y = -1;
+
+    robot->dir = get_direction(DOWN);
 
     for (size_t i = 0; i < sizeof(robot->basket); i++) {
         robot->basket[i] = EMPTY;
@@ -46,4 +51,20 @@ int find_from_basket(const Robot *robot, char value) {
         }
     }
     return -1;  // Value not found in basket
+}
+
+// Define direction vectors at program start
+const Position  DIRECTION_VECTORS[NUM_DIRECTIONS] = {
+    [LEFT]  = {-1, 0},  // Left direction
+    [RIGHT] = {1, 0},   // Right direction
+    [UP]    = {0, 1},  // Up direction
+    [DOWN]  = {0, -1}    // Down direction
+};
+
+Position get_direction(Direction dir) {
+    return DIRECTION_VECTORS[dir];
+}
+
+void    robot_turn(Robot *robot, Direction dir) {
+    robot->dir = get_direction(dir);
 }

@@ -24,6 +24,13 @@ int main() {
     get_positions(&map, 'R');  // Red ores
     get_positions(&map, 'B');  // Blue ores
     print_checks(map);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
+    robot_turn(&robot, RIGHT);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
+    robot_turn(&robot, UP);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
+    robot_turn(&robot, DOWN);
+    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
     while (1)
     {
         printf("\nEnter new target cell (x y): ");
