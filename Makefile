@@ -22,9 +22,9 @@ SRC_FILES	= main\
 				grid\
 				print\
 				robot\
-				A*\
-				open_list_utils\
-				convert_path_to_actions
+				A_star/A_star\
+				A_star/open_list_utils\
+				convert_path/convert_path_to_actions
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -38,9 +38,11 @@ all		:
 		@echo "\n"
 		@echo "$(GREEN) -------------$(RED)I $(CYAN)AM $(GREEN)DONE $(YELLOW)MADAFAKA$(GREEN)-------------------------- $(DEF_COLOR)"
 
-$(OBJS_DIR)%.o:	$(SRCS_DIR)%.c
-				@$(CC) $(CFLAGS) -Wall -Wextra -Werror -O3 -c $< -o $@
-				@echo "$(GREEN)Compiling $<$(DEF_COLOR)"
+# Modified pattern rule to handle subdirectories
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
+		@mkdir -p $(@D)
+		@$(CC) $(CFLAGS) -Wall -Wextra -Werror -O3 -c $< -o $@
+		@echo "$(GREEN)Compiling $<$(DEF_COLOR)"
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
