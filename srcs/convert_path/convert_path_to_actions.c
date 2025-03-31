@@ -54,29 +54,18 @@ int convert_path_to_actions(const Position *path, int path_length, Robot *r) {
         int dy = next.y - current.y;
 
         if (dx == 1) //GO_RIGHT
-        {
             add_turns(r, RIGHT, &instruction_count);
-            r->instructions[instruction_count] = MOVE_STRAIGHT;
-        }
         else if (dx == -1) //GO_LEFT
-        {
             add_turns(r, LEFT, &instruction_count);
-            r->instructions[instruction_count] = MOVE_STRAIGHT;
-        }
         else if (dy == 1) //GO_DOWN
-        {
             add_turns(r, DOWN, &instruction_count);
-            r->instructions[instruction_count] = MOVE_STRAIGHT;
-        }
         else if (dy == -1) //GO_UP
-        {
             add_turns(r, UP, &instruction_count);
-            r->instructions[instruction_count] = MOVE_STRAIGHT;
-        }
         else {
             // Invalid movement (diagonal or no movement)
             return -1;
         }
+        r->instructions[instruction_count] = MOVE_STRAIGHT;
         instruction_count++;
         
         // Safety check

@@ -10,13 +10,14 @@ void    robot_init(Robot *robot) {
     robot->old_pos.x = -1;
     robot->old_pos.y = -1;
 
-    robot->dir = get_direction(DOWN);
+    robot->dir = get_direction(LEFT);
+    robot->facing = get_direction(LEFT);
 
     for (size_t i = 0; i < sizeof(robot->basket); i++) {
         robot->basket[i] = EMPTY;
     }
 
-    for (int j = 0; j < 25; j++) {
+    for (int j = 0; j < 50; j++) {
         robot->instructions[j] = 0;
     }
 }

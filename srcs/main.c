@@ -9,13 +9,6 @@ void    print_checks(Grid map, Robot robot)
     printf("\nCopied Grid:");
     print_grid(&fresh);
     print_ore_positions(&map);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_facing(&robot, RIGHT);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_facing(&robot, UP);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
-    robot_facing(&robot, DOWN);
-    printf("Robot direction :(%d, %d)\n", robot.dir.x, robot.dir.y);
 }
 
 int main() {

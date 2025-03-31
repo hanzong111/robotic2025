@@ -60,7 +60,7 @@ typedef struct {
     Position facing;
     Position old_pos;
     char     basket[4];
-    int     instructions[25];
+    int     instructions[50];
     Node     path_compare[4];
 } Robot;
 
@@ -110,5 +110,8 @@ Node    open_list_pop(path *p);
 
 //convert_path_to_actions
 int     convert_path_to_actions(const Position *path, int path_length, Robot *robot);
+float   angle_between_vectors(const Position *a, const Position *b);
+float   vector_to_angle(const Position *dir);
+void    add_turns(Robot *r, Direction dir, int *instruction_count);
 
 #endif
