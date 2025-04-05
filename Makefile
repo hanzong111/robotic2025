@@ -24,7 +24,8 @@ SRC_FILES	= main\
 				robot\
 				A_star/A_star\
 				A_star/open_list_utils\
-				convert_path/convert_path_to_actions
+				convert_path/convert_path_to_actions\
+				BFS/BFS\
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))

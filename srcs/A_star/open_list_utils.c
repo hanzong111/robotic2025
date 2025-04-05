@@ -1,4 +1,4 @@
-#include "../../includes/robot.h"
+#include "../../includes/A_star.h"
 
 bool open_list_is_empty(int open_size)
 {

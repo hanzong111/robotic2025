@@ -14,15 +14,6 @@
 #define EMPTY '\0'      // Empty cell
 #define BASKET_SIZE 4   // Robot basket size
 
-#define GO_LEFT 10
-#define GO_RIGHT 11
-#define GO_UP 12
-#define GO_DOWN 13
-#define MOVE_STRAIGHT 14
-#define TURN_LEFT 15
-#define TURN_RIGHT 16
-#define U_TURN 17
-
 #define ANGLE_EPSILON 0.001f
 #define PI M_PI
 
@@ -34,6 +25,15 @@ typedef struct {
     int x;
     int y;
 } Position;
+
+typedef enum {
+    STOP = 0,
+    MOVE = 1,
+    TURN_RIGHT = 2,
+    TURN_LEFT = 3,
+    GRAB = 4,
+    PUT = 5,
+} Chassis_Action;
 
 typedef enum {
     LEFT,
@@ -55,30 +55,17 @@ typedef struct {
 } Node;
 
 typedef struct {
-    Position pos;
-    Position dir;
-    Position facing;
-    Position old_pos;
-    char     basket[4];
-    int     instructions[50];
-    Node     path_compare[4];
+    Position        pos;
+    Position        dir;
+    Position        facing;
+    Position        old_pos;
+    char            basket[4];
+    Chassis_Action  instructions[100];
+    Node            path_compare[4];
 } Robot;
-
-
-typedef struct {
-    Node        open_list[ROWS * COLS];
-    Position    came_from[ROWS][COLS];
-    Position    path[ROWS * COLS];
-    int         g_score[ROWS][COLS];
-    int         open_size;
-    int         path_length;
-    bool        closed_list[ROWS][COLS];
-    bool        is_target;
-} path;
 
 // Predefined direction vectors (compile-time constants)
 extern const Position DIRECTION_VECTORS[NUM_DIRECTIONS];
-Position get_direction(Direction dir);
 
 //grid.c
 void    grid_init(Grid *);
@@ -96,22 +83,5 @@ void    update_robot_position(Robot *robot, int x, int y);
 bool    update_robot_basket(Robot *robot, int index, char value);
 int     find_from_basket(const Robot *robot, char value);
 void    robot_facing(Robot *robot, Direction dir);
-
-//A*.c
-int     heuristic(Position a, Position b);
-void    a_star_init(path *p);
-void    a_star(path *p, Position start, Position goal, Grid *grid);
-
-//open_list_utils.c
-bool    open_list_is_empty(int open_size);
-int     open_list_find(Position pos, int open_size, Node *open_list);
-void    open_list_push(Node node, path *p);
-Node    open_list_pop(path *p);
-
-//convert_path_to_actions
-int     convert_path_to_actions(const Position *path, int path_length, Robot *robot);
-float   angle_between_vectors(const Position *a, const Position *b);
-float   vector_to_angle(const Position *dir);
-void    add_turns(Robot *r, Direction dir, int *instruction_count);
 
 #endif

@@ -23,7 +23,8 @@ void add_turns(Robot *r, Direction dir, int *instruction_count) {
 
     // Handle 180° turn first
     if (fabs(fabs(angle) - M_PI) < ANGLE_EPSILON) {
-        r->instructions[(*instruction_count)++] = U_TURN;
+        r->instructions[(*instruction_count)++] = TURN_RIGHT;
+        r->instructions[(*instruction_count)++] = TURN_RIGHT;
         r->dir = target_dir;
         return;
     }
@@ -65,7 +66,7 @@ int convert_path_to_actions(const Position *path, int path_length, Robot *r) {
             // Invalid movement (diagonal or no movement)
             return -1;
         }
-        r->instructions[instruction_count] = MOVE_STRAIGHT;
+        r->instructions[instruction_count] = MOVE;
         instruction_count++;
         
         // Safety check

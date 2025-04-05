@@ -1,7 +1,10 @@
 #include "../includes/robot.h"
+#include "../includes/A_star.h"
+#include "../includes/BFS.h"
 
 void    print_checks(Grid map, Robot robot)
 {
+    (void)robot;
     printf("\nFinal Grid:");
     print_grid(&map);
     Grid fresh;
@@ -11,11 +14,22 @@ void    print_checks(Grid map, Robot robot)
     print_ore_positions(&map);
 }
 
+void    action_executor(int k, Robot *robot){
+    for (int i = 0; i < k; i++) {
+        if(robot->instructions[i] == TURN_LEFT) 
+            printf("TURN_LEFT ->");
+        else if(robot->instructions[i] == TURN_RIGHT) 
+            printf("TURN_RIGHT ->");
+        else if(robot->instructions[i] == MOVE) 
+            printf("MOVE_STRAIGHT ->");
+    }
+}
+
 int main() {
+    // Position        goal = {0, 2};
     Grid            map;
     Robot           robot;
-    path            p;
-    Position        goal = {0, 2};
+    // path            p;
 
     grid_init(&map);
     robot_init(&robot);
@@ -24,24 +38,28 @@ int main() {
     get_positions(&map, 'R');  // Red ores
     get_positions(&map, 'B');  // Blue ores
     print_checks(map, robot);
-    while (1)
-    {
-        printf("\nEnter new target cell (x y): ");
-        int h = scanf("%d %d", &goal.x, &goal.y);
-        (void)h;
-        a_star(&p, robot.pos, goal, &map);
-        int k = convert_path_to_actions(p.path, p.path_length, &robot);
-        printf("Path (length %d):\n", p.path_length);
-            for (int i = 0; i < p.path_length; i++) {
-                printf("(%d, %d) ", p.path[i].x, p.path[i].y);
-            }
-        printf("\nMovement instructions:\n");
-        for (int i = 0; i < k; i++) {
-            if(robot.instructions[i] == U_TURN) printf("U_TURN ->");
-            else if(robot.instructions[i] == TURN_LEFT) printf("TURN_LEFT ->");
-            else if(robot.instructions[i] == TURN_RIGHT) printf("TURN_RIGHT ->");
-            else if(robot.instructions[i] == MOVE_STRAIGHT) printf("MOVE_STRAIGHT ->");
-        }
+    find_ore_path(&map);
+    uint8_t length = get_path_length();
+    const Point* path = get_bfs_path();
+
+    for(uint8_t i = 0; i < length; i++) {
+        Point path = get_path_point(i);
+        printf("(%d, %d) ", path.x, path.y);
     }
+    (void)path;
+    // while (1)
+    // {
+    //     printf("\nEnter new target cell (x y): ");
+    //     int h = scanf("%d %d", &goal.x, &goal.y);
+    //     (void)h;
+    //     a_star(&p, robot.pos, goal, &map);
+    //     int k = convert_path_to_actions(p.path, p.path_length, &robot);
+    //     printf("Path (length %d):\n", p.path_length);
+    //         for (int i = 0; i < p.path_length; i++) {
+    //             printf("(%d, %d) ", p.path[i].x, p.path[i].y);
+    //         }
+    //     printf("\nMovement instructions:\n");
+    //     action_executor(k, &robot);
+    // }
     return 0;
 }

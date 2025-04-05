@@ -1,4 +1,4 @@
-#include "../../includes/robot.h"
+#include "../../includes/A_star.h"
 
 // Directions: Up, Down, Left, Right (4-way movement)
 const int dx[4] = {0, 1, 0, -1};
