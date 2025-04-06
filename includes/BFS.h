@@ -8,7 +8,7 @@
 #define BFS_COLS 5
 #define MAX_ORES 8
 #define MAX_PATH 100  // Adjust based on expected max path length
-#define QUEUE_SIZE 2048
+#define QUEUE_SIZE 3000
 
 // Convert grid coordinates to array indices
 #define GRID_TO_ARRAY_X(gx) (gx)

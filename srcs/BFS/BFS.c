@@ -47,29 +47,11 @@ QueueState dequeue() {
 
 static StateInfo visited[BFS_ROWS][BFS_COLS][1 << MAX_ORES];
 
-void print_ore_grid() {
-    printf("\n=== Ore Grid (Array Indices) ===\n");
-    for(int x=0; x<BFS_ROWS; x++) {
-        printf("[%d] ", x);
-        for(int y=0; y<BFS_COLS; y++) {
-            if(ore_index[x][y] != -1) {  // Note: x first!
-                printf("%2d ", ore_index[x][y]);
-            } else {
-                printf(" . ");
-            }
-        }
-        printf("\n");
-    }
-    printf("===============================\n");
-    
-}
-
 void bfs_init(Grid *grid) {
     // Convert grid start (2,0) to array indices
     bfs_start_x = GRID_TO_ARRAY_X(2);
     bfs_start_y = GRID_TO_ARRAY_Y(0);
 
-    printf("Extracting blue ore positions...\n");
     // Extract blue ores (first 4 positions)
     for(uint8_t i = 0; i < ORE_COUNT; i++) {
         ores[i] = (Point){
@@ -77,17 +59,13 @@ void bfs_init(Grid *grid) {
             .y = grid->blue[i].y
         };
     }
-    printf("Extracting red ore positions...\n");
+
     // Extract red ores (next 4 positions)
     for(uint8_t i = 0; i < ORE_COUNT; i++) {
         ores[ORE_COUNT + i] = (Point){
             .x = grid->red[i].x,
             .y = grid->red[i].y
         };
-    }
-
-    for(int i=0; i<MAX_ORES; i++) {
-        printf("Ore %d at (%d,%d)\n", i, ores[i].x, ores[i].y);
     }
     
     memset(ore_index, -1, sizeof(ore_index));
@@ -97,8 +75,6 @@ void bfs_init(Grid *grid) {
         ore_index[y][x] = i;
     }
 
-    print_ore_grid();
-    
     // Initialize visited states
     for(int x = 0; x < BFS_ROWS; x++) {
         for(int y = 0; y < BFS_COLS; y++) {
@@ -110,7 +86,6 @@ void bfs_init(Grid *grid) {
             }
         }
     }
-    printf("Ready!!!\n");
 }
 
 void bfs_reconstruct_path(QueueState final) {
@@ -118,7 +93,7 @@ void bfs_reconstruct_path(QueueState final) {
     uint8_t y = final.x;
     uint8_t mask = final.mask;
     bfs_path_length = 0;
-    printf("Here\n");
+
     // Clear previous path
     memset(bfs_path, 0, sizeof(bfs_path));
 
@@ -174,30 +149,10 @@ uint8_t find_ore_path(Grid *grid) {
     while(q_front < q_rear) {
         m++;
         QueueState current = dequeue();
-        // printf("\nCurrent State:\n");
-        // printf("Position: (%d, %d) | Steps: %d\n", current.x, current.y, current.steps);
-        // printf("Mask: 0b");
-        // // Print 8-bit binary representation (for MAX_ORES=8)
-        // for(int i = 7; i >= 0; i--) {
-        //     printf("%d", (current.mask >> i) & 1);
-        // }
-        // printf(" (0x%02x)\n", current.mask);
-        // printf("Collected Ores: ");
-        // if(current.mask == 0) {
-        //     printf("None");
-        // } else {
-        //     for(int i = 0; i < MAX_ORES; i++) {
-        //         if(current.mask & (1 << i)) {
-        //             printf("%d ", i);
-        //         }
-        //     }
-        // }
-        // printf("\n----------------------------\n");
 
         // // // Check completion condition
         if(current.mask == (1 << MAX_ORES) - 1) {
-            printf("All ores collected!\n");
-            printf("%d iterations !!!\n", m);
+            printf("%d iterations !!!\n\n", m);
             bfs_reconstruct_path(current);
             return 1;
         }

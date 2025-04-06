@@ -11,7 +11,7 @@ void    print_checks(Grid map, Robot robot)
     copy_grid(&fresh.cells, &map.cells);
     printf("\nCopied Grid:");
     print_grid(&fresh);
-    print_ore_positions(&map);
+    //print_ore_positions(&map);
 }
 
 void    action_executor(int k, Robot *robot){
@@ -41,7 +41,7 @@ int main() {
     find_ore_path(&map);
     uint8_t length = get_path_length();
     const Point* path = get_bfs_path();
-
+    printf("Shortest Path to get all ores:\n");
     for(uint8_t i = 0; i < length; i++) {
         Point path = get_path_point(i);
         printf("(%d, %d) ", path.x, path.y);
