@@ -22,8 +22,6 @@ SRC_FILES	= main\
 				grid\
 				print\
 				robot\
-				A_star/A_star\
-				A_star/open_list_utils\
 				convert_path/convert_path_to_actions\
 				BFS/BFS\
 
