@@ -183,30 +183,44 @@ void example_process(test_Grid *grid) {
     map.red[2].x = grid->red[2].x;
     map.red[3].x = grid->red[3].x;
     
+    //Print Paths the require queue larger than 3000
     // if (find_ore_path(&map) == 2)
     // {
     //         print_grid(&map);
     //         print_ore_positions_1(&map);
     // }
 
+    // Print Ok and Error 
+    // if(find_ore_path(&map) == 1 || find_ore_path(&map) == 2)
+    // {
+    //     printf(GREEN);
+    //     printf("OK!\n");
+    //     printf("\033[0m\n");
+    // }
+    // else
+    // {
+    //     printf(RED);
+    //     printf("Error!\n");
+    //     printf("\033[0m\n");
+    //     print_grid(&map);
+    //     print_ore_positions_1(&map);
+    //     exit(0);
+    // }
+
     if(find_ore_path(&map) == 1 || find_ore_path(&map) == 2)
     {
-        printf(GREEN);
-        printf("OK!\n");
-        printf("\033[0m\n");
+        uint8_t length = get_path_length();
+        if (length >= 5 && length <= 9)
+        {
+            printf("Path length: %d\n", length);
+            print_grid(&map);
+        }
     }
-    else
-    {
-        printf(RED);
-        printf("Error!\n");
-        printf("\033[0m\n");
-        print_grid(&map);
-        print_ore_positions_1(&map);
-        exit(0);
-    }
+
     static int count = 0;
     ++count;
-    printf("Processed %d configurations...\n", count);
+    if (count == 450450)
+        printf("Processed %d configurations...\n", count);
 }
 
 int main() {

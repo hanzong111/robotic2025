@@ -152,7 +152,6 @@ uint8_t find_ore_path(Grid *grid) {
 
         // // // Check completion condition
         if(current.mask == (1 << MAX_ORES) - 1) {
-            printf("%d iterations !!!\n\n", m);
             bfs_reconstruct_path(current);
             if(m > 3000)
                 return 2;
