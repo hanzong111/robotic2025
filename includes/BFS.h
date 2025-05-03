@@ -9,6 +9,7 @@
 #define MAX_ORES 8
 #define MAX_PATH 100  // Adjust based on expected max path length
 #define QUEUE_SIZE 3100
+#define EMPTY_POSITION 50
 
 // Convert grid coordinates to array indices
 #define GRID_TO_ARRAY_X(gx) (gx)
@@ -46,7 +47,7 @@ uint8_t find_ore_path();
 
 //BFS_utils.c
 void initialize_bfs_path(void);
-const Point* get_bfs_path(void);
+Point* get_bfs_path(void);
 uint8_t get_path_length(void);
 Point get_path_point(uint8_t index);
 

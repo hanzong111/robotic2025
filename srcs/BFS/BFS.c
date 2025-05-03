@@ -19,16 +19,21 @@ void initialize_bfs_path(void) {
     bfs_path_length = 0;
 }
 
-const Point* get_bfs_path(void) {
+Point* get_bfs_path(void) {
     return bfs_path;
 }
 
 uint8_t get_path_length(void) {
-    return bfs_path_length;
+    for (int i = 0; i < MAX_PATH; i++) {
+        if (bfs_path[i].x == EMPTY_POSITION && bfs_path[i].y == EMPTY_POSITION) {
+            return i;
+        }
+    }
+    return 0;
 }
 
 Point get_path_point(uint8_t index) {
-    if(index < bfs_path_length) {
+    if(index < get_path_length()) {
         return bfs_path[index];
     }
     // Return invalid point for error handling
@@ -95,7 +100,7 @@ void bfs_reconstruct_path(QueueState final) {
     bfs_path_length = 0;
 
     // Clear previous path
-    memset(bfs_path, 0, sizeof(bfs_path));
+    memset(bfs_path, EMPTY_POSITION, sizeof(bfs_path));
 
     while(1) {
         // Convert to grid coordinates before storing
@@ -150,28 +155,8 @@ uint8_t find_ore_path(Grid *grid) {
         m++;
         QueueState current = dequeue();
 
-        printf("\nCurrent State:\n");
-        printf("Position: (%d, %d) | Steps: %d\n", current.x, current.y, current.steps);
-        printf("Mask: 0b");
-        // Print 8-bit binary representation (for MAX_ORES=8)
-        for(int i = 7; i >= 0; i--) {
-            printf("%d", (current.mask >> i) & 1);
-        }
-        printf(" (0x%02x)\n", current.mask);
-        printf("Collected Ores: ");
-        if(current.mask == 0) {
-            printf("None");
-        } else {
-            for(int i = 0; i < MAX_ORES; i++) {
-                if(current.mask & (1 << i)) {
-                    printf("%d ", i);
-                }
-            }
-        }
-        printf("\n----------------------------\n");
         // // // Check completion condition
         if(current.mask == (1 << MAX_ORES) - 1) {
-            printf("%d iterations !!!\n\n", m);
             bfs_reconstruct_path(current);
             return 1;
         }
@@ -200,7 +185,5 @@ uint8_t find_ore_path(Grid *grid) {
             }
         }
     }
-    printf("%d iterations !!!\n", m);
-    printf("No path found!\n");
     return 0;
 }

@@ -1,5 +1,6 @@
 #include "../includes/robot.h"
 #include "../includes/BFS.h"
+#include "../includes/add_dropoff_path.h"
 
 void    print_checks(Grid map, Robot robot)
 {
@@ -54,9 +55,10 @@ int main() {
 
     // Start BFS from the robot's initial position
     find_ore_path(&map);
+    add_dropoff_path();
 
     uint8_t length = get_path_length();
-    const Point* path = get_bfs_path();
+    Point* path = get_bfs_path();
 
     printf("Shortest Path to get all ores:\n");
     for(uint8_t i = 0; i < length; i++) {
