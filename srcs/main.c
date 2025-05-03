@@ -1,5 +1,4 @@
 #include "../includes/robot.h"
-#include "../includes/A_star.h"
 #include "../includes/BFS.h"
 
 void    print_checks(Grid map, Robot robot)
