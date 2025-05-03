@@ -150,28 +150,9 @@ uint8_t find_ore_path(Grid *grid) {
         m++;
         QueueState current = dequeue();
 
-        // printf("\nCurrent State:\n");
-        // printf("Position: (%d, %d) | Steps: %d\n", current.x, current.y, current.steps);
-        // printf("Mask: 0b");
-        // // Print 8-bit binary representation (for MAX_ORES=8)
-        // for(int i = 7; i >= 0; i--) {
-        //     printf("%d", (current.mask >> i) & 1);
-        // }
-        // printf(" (0x%02x)\n", current.mask);
-        // printf("Collected Ores: ");
-        // if(current.mask == 0) {
-        //     printf("None");
-        // } else {
-        //     for(int i = 0; i < MAX_ORES; i++) {
-        //         if(current.mask & (1 << i)) {
-        //             printf("%d ", i);
-        //         }
-        //     }
-        // }
-        // printf("\n----------------------------\n");
         // // // Check completion condition
         if(current.mask == (1 << MAX_ORES) - 1) {
-            // printf("%d iterations !!!\n\n", m);
+            printf("%d iterations !!!\n\n", m);
             bfs_reconstruct_path(current);
             if(m > 3000)
                 return 2;
@@ -203,7 +184,5 @@ uint8_t find_ore_path(Grid *grid) {
             }
         }
     }
-    // printf("%d iterations !!!\n", m);
-    // printf("No path found!\n");
     return 0;
 }
