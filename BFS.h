@@ -46,9 +46,7 @@ void bfs_reconstruct_path(QueueState final);
 uint8_t find_ore_path();
 
 //BFS_utils.c
-void initialize_bfs_path(void);
 Point* get_bfs_path(void);
 uint8_t get_path_length(void);
-Point get_path_point(uint8_t index);
 
 #endif

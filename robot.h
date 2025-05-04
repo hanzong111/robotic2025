@@ -73,28 +73,22 @@ typedef struct {
 
 // Predefined direction vectors (compile-time constants)
 extern const Position DIRECTION_VECTORS[NUM_DIRECTIONS];
+extern Chassis_Action* Task_List; 
 
 //grid.c
 void    grid_init(Grid *);
 void    get_positions(Grid *grid, char ore_type);
-void    copy_grid(char (*dest)[5][5], char (*src)[5][5]);
-bool    update_map(Grid *grid, int x, int y, char new_char);
-
-//print.c
-void    print_grid(const Grid *);
-void    print_ore_positions(const Grid *grid);
 
 //robot.c
 void    robot_init(Robot *robot);
-void    update_robot_position(Robot *robot, int x, int y);
-bool    update_robot_basket(Robot *robot, int index, char value);
-int     find_from_basket(const Robot *robot, char value);
 void    robot_facing(Robot *robot, Direction dir);
-Chassis_Action* get_Task_List(Robot *robot);
+Chassis_Action* get_Task_List(void);
 
 int convert_path_to_actions(const Point *path, int path_length, Robot *r, Grid *grid);
 float angle_between_vectors(const Position *a, const Position *b);
 
 void    Path_Planning();
+
+void    add_dropoff_path();
 
 #endif

@@ -1,6 +1,5 @@
-#include "../includes/BFS.h"
-#include "../includes/add_dropoff_path.h"
-#include "../includes/robot.h"
+#include "BFS.h"
+#include "robot.h"
 #include <stdio.h>
 
 int    add_left_or_right(Point* path, int index)

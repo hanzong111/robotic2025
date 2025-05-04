@@ -1,5 +1,5 @@
-# include "../includes/BFS.h"
-# include  "../includes/robot.h"
+# include "BFS.h"
+# include  "robot.h"
 
 // Example ore positions (modify as needed)
 Point ores[MAX_ORES];
@@ -13,11 +13,6 @@ uint8_t bfs_path_length = 0;
 static uint8_t bfs_start_x;
 static uint8_t bfs_start_y;
 
-void initialize_bfs_path(void) {
-    // Reset path storage    memset(bfs_path, 0, sizeof(bfs_path));
-    bfs_path_length = 0;
-}
-
 Point* get_bfs_path(void) {
     return bfs_path;
 }
@@ -29,14 +24,6 @@ uint8_t get_path_length(void) {
         }
     }
     return 0;
-}
-
-Point get_path_point(uint8_t index) {
-    if(index < get_path_length()) {
-        return bfs_path[index];
-    }
-    // Return invalid point for error handling
-    return (Point){0xFF, 0xFF};
 }
 
 void enqueue(uint8_t x, uint8_t y, uint8_t mask, uint8_t steps) {

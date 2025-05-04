@@ -1,5 +1,5 @@
-#include "../includes/robot.h"
-#include "../includes/BFS.h"
+#include "robot.h"
+#include "BFS.h"
 
 float angle_between_vectors(const Position *a, const Position *b) {
     // Convert to math coordinates (Y increases upward)
