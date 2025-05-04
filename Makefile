@@ -25,6 +25,7 @@ SRC_FILES	= main\
 				convert_path/convert_path_to_actions\
 				BFS/BFS\
 				add_dropoff_path\
+				Path_Planning\
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))

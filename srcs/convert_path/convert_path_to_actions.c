@@ -1,4 +1,5 @@
 #include "../includes/robot.h"
+#include "../includes/BFS.h"
 
 float angle_between_vectors(const Position *a, const Position *b) {
     // Convert to math coordinates (Y increases upward)
@@ -13,38 +14,53 @@ float angle_between_vectors(const Position *a, const Position *b) {
     return angle;
 }
 
-float vector_to_angle(const Position *dir) {
-    return atan2f(dir->y, dir->x);
-}
-
 void add_turns(Robot *r, Direction dir, int *instruction_count) {
+    Position current_dir = r->dir;
     Position target_dir = DIRECTION_VECTORS[dir];
-    float angle = angle_between_vectors(&r->dir, &target_dir);
+    
+    // Calculate signed angle between directions using atan2
+    float angle = angle_between_vectors(&current_dir, &target_dir);
+    
+    // Normalize angle to [-π, π]
+    angle = atan2(sin(angle), cos(angle));
 
-    // Handle 180° turn first
+    // Check for U-turn (180° ± epsilon) FIRST
     if (fabs(fabs(angle) - M_PI) < ANGLE_EPSILON) {
-        r->instructions[(*instruction_count)++] = TURN_RIGHT;
-        r->instructions[(*instruction_count)++] = TURN_RIGHT;
-        r->dir = target_dir;
+        r->instructions[(*instruction_count)++] = U_TURN;
+        robot_facing(r, dir);
         return;
     }
 
-    // Determine turn direction
+    // Determine turn direction with proper thresholding
     if (angle > ANGLE_EPSILON) {
-            r->instructions[(*instruction_count)++] = TURN_RIGHT;
-    } 
-    else if (angle < -ANGLE_EPSILON) {
-            r->instructions[(*instruction_count)++] = TURN_LEFT;
+        r->instructions[(*instruction_count)++] = TURN_RIGHT;
+    } else if (angle < -ANGLE_EPSILON) {
+        r->instructions[(*instruction_count)++] = TURN_LEFT;
     }
-    
+
     // Update direction after turns
-    r->dir = target_dir;
+    robot_facing(r, dir);
 }
 
-int convert_path_to_actions(const Position *path, int path_length, Robot *r) {
+void copyPointsToPositions(const Point* source, Position* destination, size_t count) {
+    for (size_t i = 0; i < count; ++i) {
+        // Convert uint8_t values to int (implicit conversion)
+        destination[i].x = source[i].x;
+        destination[i].y = source[i].y;
+    }
+}
+
+int convert_path_to_actions(const Point *path_1, int path_length, Robot *r, Grid *grid) {
     if (path_length < 2) return 0;  // No movement needed
     
     int         instruction_count = 0;
+    Position    path[MAX_PATH];
+    
+    for (int i = 0; i < path_length; ++i) {
+        // Convert uint8_t values to int (implicit conversion)
+        path[i].x = path_1[i].x;
+        path[i].y = path_1[i].y;
+    }
     
     for (int i = 0; i < path_length - 1; i++) {
         Position current = path[i];
@@ -66,12 +82,27 @@ int convert_path_to_actions(const Position *path, int path_length, Robot *r) {
             // Invalid movement (diagonal or no movement)
             return -1;
         }
-        r->instructions[instruction_count] = MOVE;
+
+        if(grid->cells[next.y][next.x] == 'R')
+        {
+            r->instructions[instruction_count] = GRAB_RED;
+            grid->cells[next.y][next.x] = '0';
+        }
+        else if (grid->cells[next.y][next.x] == 'B' )
+        {
+            r->instructions[instruction_count] = GRAB_BLUE;
+            grid->cells[next.y][next.x] = '0';
+        }
+        else if (grid->cells[next.y][next.x] == 'D')
+        {
+            r->instructions[instruction_count] = DROP;
+            instruction_count++;
+            r->instructions[instruction_count] = MOVE_BACKWARD;
+        }
+        else
+            r->instructions[instruction_count] = MOVE_FOWARD;
         instruction_count++;
-        
-        // Safety check
-        if (instruction_count >= 50) break;
     }
-    
+    r->instructions[instruction_count] = END;
     return instruction_count;
 }

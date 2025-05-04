@@ -4,14 +4,14 @@ Position get_direction(Direction dir);
 void    robot_turn(Robot *robot, Direction dir);
 
 void    robot_init(Robot *robot) {
-    robot->pos.x = 0;
+    robot->pos.x = 2;
     robot->pos.y = 0;
 
     robot->old_pos.x = -1;
     robot->old_pos.y = -1;
 
-    robot->dir = get_direction(LEFT);
-    robot->facing = get_direction(LEFT);
+    robot->dir = get_direction(DOWN);
+    robot->facing = get_direction(DOWN);
 
     for (size_t i = 0; i < sizeof(robot->basket); i++) {
         robot->basket[i] = EMPTY;
@@ -68,4 +68,8 @@ Position get_direction(Direction dir) {
 
 void    robot_facing(Robot *robot, Direction dir) {
     robot->dir = get_direction(dir);
+}
+
+Chassis_Action* get_Task_List(Robot *robot) {
+    return robot->instructions;
 }
