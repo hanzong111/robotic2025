@@ -14,8 +14,7 @@ static uint8_t bfs_start_x;
 static uint8_t bfs_start_y;
 
 void initialize_bfs_path(void) {
-    // Reset path storage
-    memset(bfs_path, 0, sizeof(bfs_path));
+    // Reset path storage    memset(bfs_path, 0, sizeof(bfs_path));
     bfs_path_length = 0;
 }
 
@@ -166,7 +165,7 @@ uint8_t find_ore_path(Grid *grid) {
             int16_t nx = current.y + dy[i];
             int16_t ny = current.x + dx[i];
             
-            if(nx >=0 && nx < BFS_ROWS && ny >=0 && ny < BFS_COLS) {
+            if(nx >=1 && nx < BFS_ROWS && ny >=0 && ny < BFS_COLS) {
                 uint8_t new_mask = current.mask;
                 int8_t ore_id = ore_index[nx][ny];
                 
