@@ -77,7 +77,7 @@ extern Chassis_Action* Task_List;
 
 //grid.c
 void    grid_init(Grid *);
-void    get_positions(Grid *grid, char ore_type);
+void    get_positions(Grid *grid, int *red_ores, int *blue_ores);
 
 //robot.c
 void    robot_init(Robot *robot);

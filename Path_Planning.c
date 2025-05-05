@@ -11,8 +11,12 @@ void    Path_Planning()
     grid_init(&map);
     robot_init(&robot);
 
-    int *red_ores = /* Zhiyao 那边的Red Array*/;
-    int *blue_ores = /* Zhiyao 那边的Blue Array*/;
+    // int *red_ores = /* Zhiyao 那边的Red Array*/;
+    // int *blue_ores = /* Zhiyao 那边的Blue Array*/;
+
+    //Manual Test
+    int red_ores[4] = {1, 2, 3, 4};
+    int blue_ores[4] = {5, 6, 7, 8};
 
     //store them in the ore_positions struct
     get_positions(&map, red_ores, blue_ores);  // Red ores

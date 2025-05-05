@@ -38,7 +38,9 @@ void get_positions(Grid *grid, int *Red_Ores, int *Blue_Ores)
 
         grid->red[i].x = red_col;
         grid->red[i].y = red_row;
+        grid->cells[red_row][red_col] = 'R';  // Mark red ore on grid
         grid->blue[i].x = blue_col;
         grid->blue[i].y = blue_row;
+        grid->cells[blue_row][blue_col] = 'B';  // Mark blue ore on grid
     }
 }
