@@ -1,6 +1,7 @@
 #include "robot.h"
 
 Position get_direction(Direction dir);
+Chassis_Action* Task_List = NULL; 
 
 void    robot_init(Robot *robot) {
     robot->pos.x = 2;

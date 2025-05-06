@@ -22,25 +22,26 @@ void grid_init(Grid *grid) {
     }
 }
 
-void get_positions(Grid *grid, int *Red_Ores, int *Blue_Ores)
+void get_positions(Grid *grid, FireSource *fire_source)
 {
-    for (int i = 0; i < 4; i++)
+    int j = 0;
+    int k = 0;
+
+    for (int i = 0; i < 8; i++)
     {
-        int pos_red = Red_Ores[i];
-        int pos_blue = Blue_Ores[i];
-        // Convert position to grid coordinates (rows 1-3)
-        // Assuming positions are 1-indexed (1-15)
-        int red_row = ((pos_red - 1) / COLS) + 1;
-        int red_col = (pos_red - 1) % COLS;
-
-        int blue_row = ((pos_blue - 1) / COLS) + 1;
-        int blue_col = (pos_blue - 1) % COLS;
-
-        grid->red[i].x = red_col;
-        grid->red[i].y = red_row;
-        grid->cells[red_row][red_col] = 'R';  // Mark red ore on grid
-        grid->blue[i].x = blue_col;
-        grid->blue[i].y = blue_row;
-        grid->cells[blue_row][blue_col] = 'B';  // Mark blue ore on grid
+        if (fire_source->color == 0) //RED
+        {
+            grid->red[j].x = fire_source->col - 1;
+            grid->red[j].y = fire_source->row;
+            grid->cells[grid->red[i].y][grid->red[i].x] = 'R'; // Mark blue ore on the grid
+            j++;
+        }
+        else if (fire_source->color == 1) //BLUE
+        {
+            grid->blue[k].x = fire_source->col - 1;
+            grid->blue[k].y = fire_source->row;
+            grid->cells[grid->blue[i].y][grid->blue[i].x] = 'B'; // Mark blue ore on the grid
+            k++;
+        }
     }
 }
