@@ -54,6 +54,7 @@ int convert_path_to_actions(const Point *path_1, int path_length, Robot *r, Grid
     if (path_length < 2) return 0;  // No movement needed
     
     int         instruction_count = 0;
+    int         ore_counter = 0;
     Position    path[MAX_PATH];
     
     for (int i = 0; i < path_length; ++i) {
@@ -87,11 +88,15 @@ int convert_path_to_actions(const Point *path_1, int path_length, Robot *r, Grid
         {
             r->instructions[instruction_count] = GRAB_RED;
             grid->cells[next.y][next.x] = '0';
+            r->ore_sequence[ore_counter] = 'R';
+            ore_counter++;
         }
         else if (grid->cells[next.y][next.x] == 'B' )
         {
             r->instructions[instruction_count] = GRAB_BLUE;
             grid->cells[next.y][next.x] = '0';
+            r->ore_sequence[ore_counter] = 'B';
+            ore_counter++;
         }
         else if (grid->cells[next.y][next.x] == 'D')
         {

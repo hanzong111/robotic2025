@@ -69,6 +69,7 @@ typedef struct {
     char            basket[4];
     Chassis_Action  instructions[100];
     Node            path_compare[4];
+    char            ore_sequence[8];
 } Robot;
 
 // Predefined direction vectors (compile-time constants)
