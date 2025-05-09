@@ -22,44 +22,67 @@ void grid_init(Grid *grid) {
     }
 }
 
-void get_positions(Grid *grid, char ore_type) {
-    printf("\nEnter %d %s ore positions (1-15):\n", ORE_COUNT, 
-           (ore_type == 'R') ? "red" : "blue");
-    
-    for (int i = 0; i < ORE_COUNT; i++) {
-        while (1) {
-            int pos;
-            printf("%s ore %d: ", (ore_type == 'R') ? "Red" : "Blue", i+1);
-            
-            if (scanf("%d", &pos) != 1) {
-                printf("Invalid input. Please enter a number (1-15).\n");
-                while (getchar() != '\n');
-                continue;
-            }
-            
-            // Convert position to grid coordinates (rows 1-3)
-            int row = ((pos - 1) / COLS) + 1;
-            int col = (pos - 1) % COLS;
-            
-            if (pos < 1 || pos > 15) 
-                printf("Position must be between 1-15. Try again.\n");
-            else if (grid->cells[row][col] != '0') 
-                printf("Position already occupied. Try again.\n");
-            else 
-            {
-                grid->cells[row][col] = ore_type;
-                if(ore_type == 'R') {
-                    grid->red[i].x = col;
-                    grid->red[i].y = row;
-                } else {
-                    grid->blue[i].x = col;
-                    grid->blue[i].y = row;
-                }
-                break;
-            }
-        }
+void get_positions(Grid *grid, int *Red_Ores, int *Blue_Ores)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        int pos_red = Red_Ores[i];
+        int pos_blue = Blue_Ores[i];
+        // Convert position to grid coordinates (rows 1-3)
+        // Assuming positions are 1-indexed (1-15)
+        int red_row = ((pos_red - 1) / COLS) + 1;
+        int red_col = (pos_red - 1) % COLS;
+
+        int blue_row = ((pos_blue - 1) / COLS) + 1;
+        int blue_col = (pos_blue - 1) % COLS;
+
+        grid->red[i].x = red_col;
+        grid->red[i].y = red_row;
+        grid->cells[red_row][red_col] = 'R';  // Mark red ore on grid
+        grid->blue[i].x = blue_col;
+        grid->blue[i].y = blue_row;
+        grid->cells[blue_row][blue_col] = 'B';  // Mark blue ore on grid
     }
 }
+
+// void get_positions(Grid *grid, char ore_type) {
+//     printf("\nEnter %d %s ore positions (1-15):\n", ORE_COUNT, 
+//            (ore_type == 'R') ? "red" : "blue");
+    
+//     for (int i = 0; i < ORE_COUNT; i++) {
+//         while (1) {
+//             int pos;
+//             printf("%s ore %d: ", (ore_type == 'R') ? "Red" : "Blue", i+1);
+            
+//             if (scanf("%d", &pos) != 1) {
+//                 printf("Invalid input. Please enter a number (1-15).\n");
+//                 while (getchar() != '\n');
+//                 continue;
+//             }
+            
+//             // Convert position to grid coordinates (rows 1-3)
+//             int row = ((pos - 1) / COLS) + 1;
+//             int col = (pos - 1) % COLS;
+            
+//             if (pos < 1 || pos > 15) 
+//                 printf("Position must be between 1-15. Try again.\n");
+//             else if (grid->cells[row][col] != '0') 
+//                 printf("Position already occupied. Try again.\n");
+//             else 
+//             {
+//                 grid->cells[row][col] = ore_type;
+//                 if(ore_type == 'R') {
+//                     grid->red[i].x = col;
+//                     grid->red[i].y = row;
+//                 } else {
+//                     grid->blue[i].x = col;
+//                     grid->blue[i].y = row;
+//                 }
+//                 break;
+//             }
+//         }
+//     }
+// }
 
 void copy_grid(char (*dest)[5][5], char (*src)[5][5]) {
     memcpy(dest, src, 5 * 5 * sizeof(char));

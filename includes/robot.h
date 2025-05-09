@@ -23,6 +23,7 @@
 #define BLUE "\033[0;94mB "
 #define GREEN "\033[0;92mD "
 
+
 typedef struct {
     int x;
     int y;
@@ -69,14 +70,16 @@ typedef struct {
     char            basket[4];
     Chassis_Action  instructions[100];
     Node            path_compare[4];
+    char            ore_sequence[8];
 } Robot;
 
 // Predefined direction vectors (compile-time constants)
 extern const Position DIRECTION_VECTORS[NUM_DIRECTIONS];
+extern Chassis_Action* Task_List; 
 
 //grid.c
 void    grid_init(Grid *);
-void    get_positions(Grid *grid, char ore_type);
+void    get_positions(Grid *grid, int *red_ores, int *blue_ores);
 void    copy_grid(char (*dest)[5][5], char (*src)[5][5]);
 bool    update_map(Grid *grid, int x, int y, char new_char);
 
@@ -90,7 +93,7 @@ void    update_robot_position(Robot *robot, int x, int y);
 bool    update_robot_basket(Robot *robot, int index, char value);
 int     find_from_basket(const Robot *robot, char value);
 void    robot_facing(Robot *robot, Direction dir);
-Chassis_Action* get_Task_List(Robot *robot);
+Chassis_Action* get_Task_List();
 
 int convert_path_to_actions(const Point *path, int path_length, Robot *r, Grid *grid);
 float angle_between_vectors(const Position *a, const Position *b);

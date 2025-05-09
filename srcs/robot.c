@@ -70,6 +70,6 @@ void    robot_facing(Robot *robot, Direction dir) {
     robot->dir = get_direction(dir);
 }
 
-Chassis_Action* get_Task_List(Robot *robot) {
-    return robot->instructions;
+Chassis_Action* get_Task_List() {
+    return Task_List;
 }
