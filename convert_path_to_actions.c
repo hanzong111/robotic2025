@@ -1,6 +1,9 @@
 #include "robot.h"
 #include "BFS.h"
 
+int drop_list[8];
+int grab_list[8];
+
 float angle_between_vectors(const Position *a, const Position *b) {
     // Convert to math coordinates (Y increases upward)
     float ax = a->x, ay = -a->y;  // Flip Y for calculation
@@ -110,4 +113,79 @@ int convert_path_to_actions(const Point *path_1, int path_length, Robot *r, Grid
     }
     r->instructions[instruction_count] = END;
     return instruction_count;
+}
+
+void generate_drop_list(Robot *robot) {
+    int used[8] = {0}; // 0 indicates unused, 1 indicates used
+    int drop_index = 0;
+
+    for (int i = 0; i < 8; i++) {
+        if (!used[i] && robot->ore_sequence[i] == 'B') {
+            // Mark the current B as used and add to drop_list
+            used[i] = 1;
+            drop_list[drop_index++] = grab_list[i];
+
+            int is_left = (i <= 3);
+            int red_index = -1;
+
+            // Search opposite side first
+            if (is_left) {
+                // Check right baskets (4-7)
+                for (int j = 4; j < 8; j++) {
+                    if (!used[j] && robot->ore_sequence[j] == 'R') {
+                        red_index = j;
+                        break;
+                    }
+                }
+            } else {
+                // Check left baskets (0-3)
+                for (int j = 0; j < 4; j++) {
+                    if (!used[j] && robot->ore_sequence[j] == 'R') {
+                        red_index = j;
+                        break;
+                    }
+                }
+            }
+
+            // If no red found in opposite side, search same side
+            if (red_index == -1) {
+                if (is_left) {
+                    // Check left baskets (0-3)
+                    for (int j = 0; j < 4; j++) {
+                        if (!used[j] && robot->ore_sequence[j] == 'R') {
+                            red_index = j;
+                            break;
+                        }
+                    }
+                } else {
+                    // Check right baskets (4-7)
+                    for (int j = 4; j < 8; j++) {
+                        if (!used[j] && robot->ore_sequence[j] == 'R') {
+                            red_index = j;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Add the found red index to drop_list if any
+            if (red_index != -1) {
+                used[red_index] = 1;
+                drop_list[drop_index++] = grab_list[red_index];
+            }
+        }
+    }
+}
+
+void    fill_drop_list(Robot *robot)
+{
+    grab_list[0] = 3;
+    grab_list[1] = 7;
+    grab_list[2] = 2;
+    grab_list[3] = 6;
+    grab_list[4] = 4;
+    grab_list[5] = 8;
+    grab_list[6] = 1;
+    grab_list[7] = 5;
+    generate_drop_list(robot);
 }

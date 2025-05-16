@@ -74,7 +74,9 @@ typedef struct {
 
 // Predefined direction vectors (compile-time constants)
 extern const Position DIRECTION_VECTORS[NUM_DIRECTIONS];
-extern Chassis_Action* Task_List; 
+extern Chassis_Action* Task_List;
+extern int drop_list[8];
+extern int grab_list[8];
 
 //grid.c
 void    grid_init(Grid *);
@@ -91,5 +93,6 @@ float angle_between_vectors(const Position *a, const Position *b);
 void    Path_Planning();
 
 void    add_dropoff_path();
+void    fill_drop_list(Robot *robot);
 
 #endif

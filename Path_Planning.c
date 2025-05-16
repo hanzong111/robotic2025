@@ -19,6 +19,6 @@ void    Path_Planning()
     // Add drop-off path
     add_dropoff_path();
     convert_path_to_actions(get_bfs_path(), get_path_length(), &robot, &map);
-
+    fill_drop_list(&robot);
     Task_List = robot.instructions;
 }

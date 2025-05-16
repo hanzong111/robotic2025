@@ -32,14 +32,14 @@ void get_positions(Grid *grid, FireSource *fire_source)
         if (fire_source->color == 0) //RED
         {
             grid->red[j].x = fire_source->col - 1;
-            grid->red[j].y = fire_source->row;
+            grid->red[j].y = fire_source->row + 1;
             grid->cells[grid->red[i].y][grid->red[i].x] = 'R'; // Mark blue ore on the grid
             j++;
         }
         else if (fire_source->color == 1) //BLUE
         {
             grid->blue[k].x = fire_source->col - 1;
-            grid->blue[k].y = fire_source->row;
+            grid->blue[k].y = fire_source->row + 1;
             grid->cells[grid->blue[i].y][grid->blue[i].x] = 'B'; // Mark blue ore on the grid
             k++;
         }
